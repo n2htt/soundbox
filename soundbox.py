@@ -14,18 +14,19 @@ interrupt_playback = False
 channels = None
 channel_index = 0
 playing_keys = {}  # Dictionary mapping keys to their assigned channels
+current_page = 0  # Track current page
+total_pages = 1   # Total number of pages
+page_offset = 0   # Offset of first file on current page
 
-def create_keylist(audio_files):
-    """Create a dictionary mapping keys to audio filenames."""
+def create_keylist():
+    """Create a dictionary mapping keys (0-9, a-z) to positions on a page."""
     keylist = {}
-    for i, filename in enumerate(audio_files):
+    for i in range(36):
         if i < 10:
             key = str(i)
-        elif i < 36:
-            key = chr(ord('a') + (i - 10))
         else:
-            key = chr(ord('A') + (i - 36))
-        keylist[key] = filename
+            key = chr(ord('a') + (i - 10))
+        keylist[key] = i
     return keylist
 
 def start_keyboard_listener(password, keylist_keys):
@@ -50,6 +51,10 @@ try:
                     print("ESC", flush=True)
                 elif event.name == 'delete':
                     print("DELETE", flush=True)
+                elif event.name == 'down':
+                    print("DOWN", flush=True)
+                elif event.name == 'up':
+                    print("UP", flush=True)
                 elif event.name in keylist:
                     print(event.name, flush=True)
         except Exception as e:
@@ -86,15 +91,29 @@ def get_password():
         return password
     return getpass.getpass('Enter password for keyboard access: ')
 
-def present_dynamic_menu(keylist):
-    """Present the menu with dynamic key assignments."""
-    global first_menu
+def present_dynamic_menu(keylist, audio_files):
+    """Present the menu with dynamic key assignments for the current page."""
+    global first_menu, current_page, total_pages, page_offset
     os.system('clear' if os.name != 'nt' else 'cls')
     if first_menu:
         print("Welcome to the Soundbox!")
         first_menu = False
-    for key, filename in keylist.items():
-        print(f"  {key} - {os.path.basename(filename)}")
+    
+    print(f"Page {current_page + 1} of {total_pages}")
+    print()
+    
+    # Calculate which files to display for this page
+    start_idx = page_offset
+    end_idx = min(start_idx + 36, len(audio_files))
+    
+    for key, position in keylist.items():
+        file_idx = start_idx + position
+        if file_idx < end_idx:
+            filename = audio_files[file_idx]
+            print(f"  {key} - {os.path.basename(filename)}")
+    
+    print()
+    print("↑/↓ - change pages")
     print("DEL - interrupt playback")
     print("ESC - exit")
 
@@ -102,17 +121,21 @@ def is_key_playing(key):
     """Check if a key's sound is currently playing."""
     if key in playing_keys:
         channel = playing_keys[key]
-        return channel.get_busy()
+        return chanzl.get_busy()
     return False
 
-def pressed_it(kn):
-    global channel_index, playing_keys
+def pressed_it(kn, audio_files):
+    global channel_index, playing_keys, page_offset, keylist
     time.sleep(0.01)
     os.system('clear' if os.name != 'nt' else 'cls')
-    print(f"\nPlaying file {kn}: ")
+    
+    # Calculate the actual file index based on current page and key position
+    file_idx = page_offset + keylist[kn]
+    filename = audio_files[file_idx]
+    print(f"\nPlaying file {file_idx}: {os.path.basename(filename)}")
     
     # Load and play sound on next available channel using round-robin
-    sound = pygame.mixer.Sound(keylist[kn])
+    sound = pygame.mixer.Sound(filename)
     channels[channel_index].play(sound)
     playing_keys[kn] = channels[channel_index]  # Track which channel this key is using
     channel_index = (channel_index + 1) % len(channels)
@@ -120,7 +143,7 @@ def pressed_it(kn):
     # Return immediately - sound plays in background
     time.sleep(0.3)
     os.system('clear' if os.name != 'nt' else 'cls')
-    present_dynamic_menu(keylist)
+    present_dynamic_menu(keylist, audio_files)
 
 pygame.mixer.init()
 channels = [pygame.mixer.Channel(i) for i in range(8)]  # Support up to 8 overlapping sounds
@@ -142,7 +165,12 @@ if not audio_files:
     exit()  
 
 audio_files.sort()
-keylist = create_keylist(audio_files)
+keylist = create_keylist()
+
+# Calculate total pages
+total_pages = (len(audio_files) + 35) // 36  # Ceiling division
+page_offset = 0
+current_page = 0
 
 password = get_password()
 
@@ -153,7 +181,7 @@ if keyboard_process is None:
     print("Failed to initialize keyboard listener. Exiting.")
     sys.exit(1)
     
-present_dynamic_menu(keylist)
+present_dynamic_menu(keylist, audio_files)
 
 # Send keylist to the subprocess
 keyboard_process.stdin.write(json.dumps(list(keylist.keys())) + '\n')
@@ -187,7 +215,21 @@ try:
             print("All sounds stopped!")
             time.sleep(0.3)
             os.system('clear' if os.name != 'nt' else 'cls')
-            present_dynamic_menu(keylist)
+            present_dynamic_menu(keylist, audio_files)
+        elif key_input == 'DOWN':
+            # Move to next page
+            if current_page < total_pages - 1:
+                current_page += 1
+                page_offset = current_page * 36
+                os.system('clear' if os.name != 'nt' else 'cls')
+                present_dynamic_menu(keylist, audio_files)
+        elif key_input == 'UP':
+            # Move to previous page
+            if current_page > 0:
+                current_page -= 1
+                page_offset = current_page * 36
+                os.system('clear' if os.name != 'nt' else 'cls')
+                present_dynamic_menu(keylist, audio_files)
         elif key_input == 'ESC':
             time.sleep(0.01)
             os.system('clear' if os.name != 'nt' else 'cls')
@@ -198,7 +240,7 @@ try:
         elif key_input in keylist:
             # Only play if the key is not already playing
             if not is_key_playing(key_input):
-                pressed_it(key_input)
+                pressed_it(key_input, audio_files)
 
 except KeyboardInterrupt:
     print('Exiting...')
