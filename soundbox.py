@@ -17,6 +17,7 @@ playing_keys = {}  # Dictionary mapping keys to their assigned channels
 current_page = 0  # Track current page
 total_pages = 1   # Total number of pages
 page_offset = 0   # Offset of first file on current page
+last_channel_used = None  # Track the most recently played channel
 
 def create_keylist():
     """Create a dictionary mapping keys (0-9, a-z) to positions on a page."""
@@ -28,6 +29,23 @@ def create_keylist():
             key = chr(ord('a') + (i - 10))
         keylist[key] = i
     return keylist
+
+def fade_out_channel(channel, duration=1.0):
+    """Fade out a channel over the specified duration (in seconds), then stop it."""
+    if not channel.get_busy():
+        return
+    
+    steps = 20  # Number of volume reduction steps
+    step_duration = duration / steps
+    initial_volume = channel.get_volume()
+    
+    for i in range(steps):
+        volume = initial_volume * (1 - (i + 1) / steps)
+        channel.set_volume(volume)
+        time.sleep(step_duration)
+    
+    channel.stop()
+    channel.set_volume(initial_volume)  # Reset volume for next playback
 
 def start_keyboard_listener(password, keylist_keys):
     """Start keyboard listener as elevated subprocess."""
@@ -55,6 +73,8 @@ try:
                     print("DOWN", flush=True)
                 elif event.name == 'up':
                     print("UP", flush=True)
+                elif event.name == 'tab':
+                    print("TAB", flush=True)
                 elif event.name in keylist:
                     print(event.name, flush=True)
         except Exception as e:
@@ -113,7 +133,7 @@ def present_dynamic_menu(keylist, audio_files):
             print(f"  {key} - {os.path.basename(filename)}")
     
     print()
-    print("↑/↓ - change pages")
+    print("↑/↓ - change pages | TAB - fade out current track")
     print("DEL - interrupt playback")
     print("ESC - exit")
 
@@ -125,7 +145,7 @@ def is_key_playing(key):
     return False
 
 def pressed_it(kn, audio_files):
-    global channel_index, playing_keys, page_offset, keylist
+    global channel_index, playing_keys, page_offset, keylist, last_channel_used
     time.sleep(0.01)
     os.system('clear' if os.name != 'nt' else 'cls')
     
@@ -138,6 +158,7 @@ def pressed_it(kn, audio_files):
     sound = pygame.mixer.Sound(filename)
     channels[channel_index].play(sound)
     playing_keys[kn] = channels[channel_index]  # Track which channel this key is using
+    last_channel_used = channels[channel_index]  # Track the most recently played channel
     channel_index = (channel_index + 1) % len(channels)
     
     # Return immediately - sound plays in background
@@ -216,6 +237,14 @@ try:
             time.sleep(0.3)
             os.system('clear' if os.name != 'nt' else 'cls')
             present_dynamic_menu(keylist, audio_files)
+        elif key_input == 'TAB':
+            # Fade out the most recently played channel
+            if last_channel_used and last_channel_used.get_busy():
+                fade_out_channel(last_channel_used)
+                print("Fading out track...")
+                time.sleep(0.3)
+                os.system('clear' if os.name != 'nt' else 'cls')
+                present_dynamic_menu(keylist, audio_files)
         elif key_input == 'DOWN':
             # Move to next page
             if current_page < total_pages - 1:
