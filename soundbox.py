@@ -141,7 +141,7 @@ def is_key_playing(key):
     """Check if a key's sound is currently playing."""
     if key in playing_keys:
         channel = playing_keys[key]
-        return chanzl.get_busy()
+        return channel.get_busy()
     return False
 
 def pressed_it(kn, audio_files):
