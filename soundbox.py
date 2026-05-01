@@ -134,13 +134,13 @@ def present_dynamic_menu(keylist, audio_files):
     
     print()
     print("↑/↓ - change pages | TAB - fade out current track")
-    print("DEL - interrupt playback")
+    print("Key again (after 1 sec) - fade out that track | DEL - interrupt playback")
     print("ESC - exit")
 
 def is_key_playing(key):
     """Check if a key's sound is currently playing."""
     if key in playing_keys:
-        channel = playing_keys[key]
+        channel, _ = playing_keys[key]  # Extract channel from (channel, start_time) tuple
         return channel.get_busy()
     return False
 
@@ -157,7 +157,7 @@ def pressed_it(kn, audio_files):
     # Load and play sound on next available channel using round-robin
     sound = pygame.mixer.Sound(filename)
     channels[channel_index].play(sound)
-    playing_keys[kn] = channels[channel_index]  # Track which channel this key is using
+    playing_keys[kn] = (channels[channel_index], time.time())  # Track channel and start time
     last_channel_used = channels[channel_index]  # Track the most recently played channel
     channel_index = (channel_index + 1) % len(channels)
     
@@ -267,8 +267,19 @@ try:
             os.system('clear' if os.name != 'nt' else 'cls')
             break
         elif key_input in keylist:
-            # Only play if the key is not already playing
-            if not is_key_playing(key_input):
+            if is_key_playing(key_input):
+                # Check if sound has been playing for at least 1 second (double strike prevention)
+                channel, start_time = playing_keys[key_input]
+                if time.time() - start_time >= 1.0:
+                    # Fade out this channel
+                    fade_out_channel(channel)
+                    del playing_keys[key_input]  # Remove from tracking
+                    print(f"Fading out key {key_input}...")
+                    time.sleep(0.3)
+                    os.system('clear' if os.name != 'nt' else 'cls')
+                    present_dynamic_menu(keylist, audio_files)
+                # else: ignore keypress if less than 1 second (prevents accidental double strike)
+            else:
                 pressed_it(key_input, audio_files)
 
 except KeyboardInterrupt:
