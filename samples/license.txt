@@ -1,0 +1,161 @@
+
+Sample Audio Files License
+
+All audio files in this directory are licensed under Creative Commons 0 (CC0):
+http://creativecommons.org/publicdomain/zero/1.0/
+
+This means the sounds are in the public domain and can be used freely without attribution (though attribution is appreciated).
+
+Downloaded from https://freesound.org/
+
+---
+
+  * 149493__kvgarlic__springpeepersmarch2012.wav
+    * url: https://freesound.org/s/149493/
+    * license: Creative Commons 0
+
+  * 151217__owlstorm__cough-3.wav
+    * url: https://freesound.org/s/151217/
+    * license: Creative Commons 0
+
+  * 159197__justbrando__glass-breaking.mp3
+    * url: https://freesound.org/s/159197/
+    * license: Creative Commons 0
+
+  * 178607__trebblofang__horror_background_atmosphere.flac
+    * url: https://freesound.org/s/178607/
+    * license: Creative Commons 0
+
+  * 198491__peridactyloptrix__african-tribal-drums-beat-1.wav
+    * url: https://freesound.org/s/198491/
+    * license: Creative Commons 0
+
+  * 203911__tripboxer__bali-gamelan-orchestra-rehearsal.wav
+    * url: https://freesound.org/s/203911/
+    * license: Creative Commons 0
+
+  * 262876__jaegrover__musical-native-american-day-of-the-dead-celebtration-with-pipes-whip-cracks-drums.wav
+    * url: https://freesound.org/s/262876/
+    * license: Creative Commons 0
+
+  * 407230__pointparkcinema__planet-sound.wav
+    * url: https://freesound.org/s/407230/
+    * license: Creative Commons 0
+
+  * 431841__audy_leonard__car-horn.wav
+    * url: https://freesound.org/s/431841/
+    * license: Creative Commons 0
+
+  * 432059__unreadpages__drumming-bunny.wav
+    * url: https://freesound.org/s/432059/
+    * license: Creative Commons 0
+
+  * 479071__nox_sound__foley_impact_stone_water_01.wav
+    * url: https://freesound.org/s/479071/
+    * license: Creative Commons 0
+
+  * 487394__phonosupf__female-voice-choral-19.wav
+    * url: https://freesound.org/s/487394/
+    * license: Creative Commons 0
+
+  * 528712__gurnzillacreative__sneezes.wav
+    * url: https://freesound.org/s/528712/
+    * license: Creative Commons 0
+
+  * 565029__yosoyhache__footsteps-sand-and-marble.wav
+    * url: https://freesound.org/s/565029/
+    * license: Creative Commons 0
+
+  * 566544__trp__200116-edited-driving-sequence-car-door-open-close-keys-beeps-seatbelt-start-engine-idle-accellerate-traffic-hyundai-interior.wav
+    * url: https://freesound.org/s/566544/
+    * license: Creative Commons 0
+
+  * 581123__fission9__distant-thunder-2.wav
+    * url: https://freesound.org/s/581123/
+    * license: Creative Commons 0
+
+  * 613858__monotraum__something-cooking.wav
+    * url: https://freesound.org/s/613858/
+    * license: Creative Commons 0
+
+  * 614101__someguy22__recording-man-sneezing.wav
+    * url: https://freesound.org/s/614101/
+    * license: Creative Commons 0
+
+  * 628994__marsounds__marbles_bouncing-on-wooden-floor-1.wav
+    * url: https://freesound.org/s/628994/
+    * license: Creative Commons 0
+
+  * 667173__itsgabbo__night-wind-chimes.mp3
+    * url: https://freesound.org/s/667173/
+    * license: Creative Commons 0
+
+  * 676787__neartheatmoshphere__blinking-forest-acoustic.wav
+    * url: https://freesound.org/s/676787/
+    * license: Creative Commons 0
+
+  * 686609__gamer500__glass-broken.wav
+    * url: https://freesound.org/s/686609/
+    * license: Creative Commons 0
+
+  * 691001__christmaskrumble666__wind-outside-cave-bowers-cave-ut.wav
+    * url: https://freesound.org/s/691001/
+    * license: Creative Commons 0
+
+  * 706256__timmydes__street-drumming-marseilles-june-2023.wav
+    * url: https://freesound.org/s/706256/
+    * license: Creative Commons 0
+
+  * 710550__ahamirikia__pouring-water-into-a-glass.mp3
+    * url: https://freesound.org/s/710550/
+    * license: Creative Commons 0
+
+  * 720183__veterok777__sad-music-on-guitar.wav
+    * url: https://freesound.org/s/720183/
+    * license: Creative Commons 0
+
+  * 741174__qubodup__huge-explosion.flac
+    * url: https://freesound.org/s/741174/
+    * license: Creative Commons 0
+
+  * 753166__ppk42__pouring-water-and-put-the-heater-back-to-its-station.wav
+    * url: https://freesound.org/s/753166/
+    * license: Creative Commons 0
+
+  * 787923__brucehep__thunder-and-rain-on-the-highveld.mp3
+    * url: https://freesound.org/s/787923/
+    * license: Creative Commons 0
+
+  * 790726__deppstudios1977__cooking-eggs-in-a-frypan.wav
+    * url: https://freesound.org/s/790726/
+    * license: Creative Commons 0
+
+  * 812106__sounds_from_palestine__crowded-street-soundscape-with-traffic-and-voices-palestine-urban-ambience.wav
+    * url: https://freesound.org/s/812106/
+    * license: Creative Commons 0
+
+  * 81734__silencyo__silencyo_village_night_fountain_reverberant_space_msd.aiff
+    * url: https://freesound.org/s/81734/
+    * license: Creative Commons 0
+
+  * 824249__bakstad__creaky-door-dry-metal-hinges-open-close-indoor.wav
+    * url: https://freesound.org/s/824249/
+    * license: Creative Commons 0
+
+  * 830500__shaunhillyard__a-ukulele-tune.wav
+    * url: https://freesound.org/s/830500/
+    * license: Creative Commons 0
+
+  * 844294__funkelfang__locking-a-room-door.wav
+    * url: https://freesound.org/s/844294/
+    * license: Creative Commons 0
+
+  * 847082__funkelfang__fast-water-drip-leaky-faucet-in-ceramic-sink.wav
+    * url: https://freesound.org/s/847082/
+    * license: Creative Commons 0
+
+  * 851223__joancalsina__footsteps-on-old-creaky-wooden-floor-vintage-hotel.m4a
+    * url: https://freesound.org/s/851223/
+    * license: Creative Commons 0
+
+
