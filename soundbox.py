@@ -85,9 +85,10 @@ except Exception as e:
 """
     
     try:
-        # Start subprocess with sudo
+        # Start subprocess with sudo using the current Python executable so venv packages are available.
+        python_executable = os.path.abspath(sys.executable)
         keyboard_process = subprocess.Popen(
-            ['sudo', '-S', 'python3', '-c', listener_code, json.dumps(keylist_keys)],
+            ['sudo', '-S', python_executable, '-c', listener_code, json.dumps(keylist_keys)],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -203,10 +204,6 @@ if keyboard_process is None:
     sys.exit(1)
     
 present_dynamic_menu(keylist, audio_files)
-
-# Send keylist to the subprocess
-keyboard_process.stdin.write(json.dumps(list(keylist.keys())) + '\n')
-keyboard_process.stdin.flush()
 
 # Give subprocess a moment to initialize
 time.sleep(0.5)
